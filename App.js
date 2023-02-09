@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NativeRouter, Route, Link, Routes } from 'react-router-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const Home = () => <Text>NFTs Lookup</Text>;
+const Details = () => <Text>NFT Details</Text>;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#A1A1A1',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+const App = () => (
+  <NativeRouter>
+    <View style={styles.container}>
+      <Link to="/" underlayColor="#f0f4f7">
+        <Text>Home</Text>
+      </Link>
+      <Link to="/details" underlayColor="#f0f4f7">
+        <Text>Details</Text>
+      </Link>
+      <StatusBar style="auto" />
+    </View>
+    <Routes>
+      <Route exact path="/" element={<Home />} />
+      <Route path="/details" element={<Details />} />
+    </Routes>
+  </NativeRouter>
+);
+
+export default App;
