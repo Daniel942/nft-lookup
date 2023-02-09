@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "nft-lookup",
+    "slug": "nft-lookup",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "nft-lookup"
+}
