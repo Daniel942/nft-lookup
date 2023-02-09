@@ -3,15 +3,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NativeRouter, Route, Link, Routes } from 'react-router-native';
 
-const Home = () => <Text>NFTs Lookup</Text>;
-const Details = () => <Text>NFT Details</Text>;
+import Lookup from './src/pages/Lookup';
+import Details from './src/pages/Details';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#A1A1A1',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#1A1A1A',
   },
 });
 
@@ -24,12 +22,14 @@ const App = () => (
       <Link to="/details" underlayColor="#f0f4f7">
         <Text>Details</Text>
       </Link>
+
       <StatusBar style="auto" />
+
+      <Routes>
+        <Route exact path="/" element={<Lookup />} />
+        <Route path="/details" element={<Details />} />
+      </Routes>
     </View>
-    <Routes>
-      <Route exact path="/" element={<Home />} />
-      <Route path="/details" element={<Details />} />
-    </Routes>
   </NativeRouter>
 );
 
