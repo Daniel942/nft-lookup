@@ -46,9 +46,7 @@ const styles = StyleSheet.create({
 const Result = ({ identifier, id }) => (
   <Link to={`/details/${identifier}/${id}`}>
     <View style={styles.result}>
-      <Text style={[styles.text, styles.resultIdentifier]}>
-        {identifier} also {id}
-      </Text>
+      <Text style={[styles.text, styles.resultIdentifier]}>{identifier}</Text>
       <Vector />
     </View>
   </Link>
