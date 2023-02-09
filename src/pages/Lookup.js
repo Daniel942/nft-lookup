@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Link } from 'react-router-native';
 import Vector from '../components/svg/Vector';
 
 const styles = StyleSheet.create({
@@ -42,11 +43,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const Result = ({ identifier }) => (
-  <View style={styles.result}>
-    <Text style={[styles.text, styles.resultIdentifier]}>{identifier}</Text>
-    <Vector />
-  </View>
+const Result = ({ identifier, id }) => (
+  <Link to={`/details/${identifier}/${id}`}>
+    <View style={styles.result}>
+      <Text style={[styles.text, styles.resultIdentifier]}>
+        {identifier} also {id}
+      </Text>
+      <Vector />
+    </View>
+  </Link>
 );
 
 const Lookup = () => {
@@ -58,7 +63,12 @@ const Lookup = () => {
       .then((response) => response.json())
       .then((json) => {
         if (json && json.nft_events) {
-          setResults(json.nft_events.map((nftEvent) => nftEvent.asset_identifier));
+          setResults(
+            json.nft_events.map((nftEvent) => ({
+              identifier: nftEvent.asset_identifier,
+              id: nftEvent.value.repr.substring(1),
+            }))
+          );
         } else {
           setResults([]);
         }
@@ -81,7 +91,7 @@ const Lookup = () => {
         <View style={styles.results}>
           <Text style={styles.text}>Results</Text>
           {results.map((result, i) => (
-            <Result key={i} identifier={result} />
+            <Result key={i} identifier={result.identifier} id={result.id} />
           ))}
         </View>
       )}
