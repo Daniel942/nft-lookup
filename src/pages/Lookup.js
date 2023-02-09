@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import Vector from '../components/svg/Vector';
 
@@ -21,13 +21,12 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#24252C',
     height: 32,
-    marginTop: 10,
+    marginVertical: 10,
   },
   button: {
     backgroundColor: '#465AE9',
     height: 46,
     borderRadius: 10,
-    marginTop: 10,
   },
   results: {
     marginTop: 16,
@@ -51,18 +50,31 @@ const Result = ({ identifier }) => (
 );
 
 const Lookup = () => {
+  const [address, setAddress] = useState('');
   const [results, setResults] = useState([]);
 
-  const onLookUp = () => {
-    //
-  };
+  const onLookUp = useCallback(() => {
+    fetch(`https://stacks-node-api.mainnet.stacks.co/extended/v1/address/${address}/nft_events`)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json && json.nft_events) {
+          setResults(json.nft_events.map((nftEvent) => nftEvent.asset_identifier));
+        } else {
+          setResults([]);
+        }
+      })
+      .catch((error) => {
+        setResults([]);
+        console.error(error);
+      });
+  }, [address]);
 
   return (
     <View style={styles.container}>
       <Text style={[styles.text, styles.title]}>NFTs Lookup</Text>
 
       <Text style={[styles.text, styles.label]}>Stacks Address:</Text>
-      <TextInput style={[styles.text, styles.input]} />
+      <TextInput onChangeText={(text) => setAddress(text)} style={[styles.text, styles.input]} />
       <Button title="Look up" onPress={onLookUp} style={styles.button} />
 
       {!!results.length && (
