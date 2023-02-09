@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { NativeRouter, Route, Routes } from 'react-router-native';
 
 import Lookup from './src/pages/Lookup';
@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
 
 const App = () => (
   <NativeRouter>
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <StatusBar style="auto" />
 
       <Routes>
         <Route exact path="/" element={<Lookup />} />
         <Route path="/details/:identifier/:id" element={<Details />} />
       </Routes>
-    </View>
+    </ScrollView>
   </NativeRouter>
 );
 
